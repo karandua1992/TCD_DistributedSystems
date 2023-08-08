@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeapp-customer-generatevoucher-app
+  labels:
+    app: cafeapp-customer-generatevoucher-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : cafeapp-customer-generatevoucher-app
+  template:
+    metadata:
+      labels:
+        app: cafeapp-customer-generatevoucher-app
+    spec:
+      containers:
+      - name: cafeapp-customer-generatevoucher-app
+        image: karandua1992/cafeapp-customer-generatevoucher:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8082
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cafeapp-customer-generatevoucher-svc
+spec:
+  selector:
+    app:  cafeapp-customer-generatevoucher-app
+  ports:
+  - port:  80
+    targetPort:  8082

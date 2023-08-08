@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeapp-customer-login-app
+  labels:
+    app: cafeapp-customer-login-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : cafeapp-customer-login-app
+  template:
+    metadata:
+      labels:
+        app: cafeapp-customer-login-app
+    spec:
+      containers:
+      - name: cafeapp-customer-login-app
+        image: karandua1992/cafeapp-customer-login:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8085
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cafeapp-customer-login-svc
+spec:
+  selector:
+    app:  cafeapp-customer-login-app
+  ports:
+  - port:  80
+    targetPort:  8085

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeapp-customer-gettransactionhistory-app
+  labels:
+    app: cafeapp-customer-gettransactionhistory-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : cafeapp-customer-gettransactionhistory-app
+  template:
+    metadata:
+      labels:
+        app: cafeapp-customer-gettransactionhistory-app
+    spec:
+      containers:
+      - name: cafeapp-customer-gettransactionhistory-app
+        image: karandua1992/cafeapp-customer-gettransactionhistory:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8083
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cafeapp-customer-gettransactionhistory-svc
+spec:
+  selector:
+    app:  cafeapp-customer-gettransactionhistory-app
+  ports:
+  - port:  80
+    targetPort:  8083

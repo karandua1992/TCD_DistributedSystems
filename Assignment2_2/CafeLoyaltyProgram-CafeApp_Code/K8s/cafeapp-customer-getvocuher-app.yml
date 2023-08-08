@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeapp-customer-getvocuher-app
+  labels:
+    app: cafeapp-customer-getvocuher-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : cafeapp-customer-getvocuher-app
+  template:
+    metadata:
+      labels:
+        app: cafeapp-customer-getvocuher-app
+    spec:
+      containers:
+      - name: cafeapp-customer-getvocuher-app
+        image: karandua1992/cafeapp-customer-getvocuher:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8084
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cafeapp-customer-getvocuher-svc
+spec:
+  selector:
+    app:  cafeapp-customer-getvocuher-app
+  ports:
+  - port:  80
+    targetPort:  8084

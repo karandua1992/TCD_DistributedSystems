@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeapp-customer-fetch-app
+  labels:
+    app: cafeapp-customer-fetch-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app : cafeapp-customer-fetch-app
+  template:
+    metadata:
+      labels:
+        app: cafeapp-customer-fetch-app
+    spec:
+      containers:
+      - name: cafeapp-customer-fetch-app
+        image: karandua1992/cafeapp-customer-fetchdetails:0.0.1
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8081
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name:  cafeapp-customer-fetch-app-svc
+spec:
+  selector:
+    app:  cafeapp-customer-fetch-app-app
+  ports:
+  - port:  80
+    targetPort:  8081
